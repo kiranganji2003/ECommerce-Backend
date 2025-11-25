@@ -5,5 +5,5 @@ import com.app.estore.dto.Status;
 
 public interface CustomerService {
     Status registerCustomer(CustomerDto customerDto);
-    void viewCustomerProfile();
+    viewCustomerProfile();
 }
