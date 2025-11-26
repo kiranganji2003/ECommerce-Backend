@@ -1,8 +1,8 @@
 package com.app.estore.service;
 
-import com.app.estore.dto.CustomerDto;
-import com.app.estore.dto.Status;
+import com.app.estore.request.CustomerRegistrationRequest;
+import com.app.estore.response.Status;
 
 public interface CustomerService {
-    Status registerCustomer(CustomerDto customerDto);
+    Status registerCustomer(CustomerRegistrationRequest registerCustomerRequest);
 }
