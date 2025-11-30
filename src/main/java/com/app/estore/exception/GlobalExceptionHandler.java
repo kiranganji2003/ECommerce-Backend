@@ -1,5 +1,6 @@
 package com.app.estore.exception;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -10,18 +11,18 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(BadCredentialsException.class)
-    public ResponseEntity<?> handleBadCred(BadCredentialsException ex) {
-        return ResponseEntity.status(401).body("Invalid username or password");
+    public ResponseEntity<ErrorMessage> handleBadCred(BadCredentialsException ex) {
+        return new ResponseEntity<>(new ErrorMessage("Invalid username or password", "BadCredentialsException.class"), HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<?> handleAccess(AccessDeniedException ex) {
-        return ResponseEntity.status(403).body("Access denied");
+    public ResponseEntity<ErrorMessage> handleAccess(AccessDeniedException ex) {
+        return new ResponseEntity<>(new ErrorMessage(ex.getMessage(), "AccessDeniedException.class"), HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<?> handleOther(Exception ex) {
-        return ResponseEntity.status(500).body(ex.getMessage());
+    public ResponseEntity<ErrorMessage> handleOther(Exception ex) {
+        return new ResponseEntity<>(new ErrorMessage(ex.getMessage(), "Exception.class"), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }
