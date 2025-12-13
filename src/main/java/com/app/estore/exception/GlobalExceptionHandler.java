@@ -12,17 +12,17 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<ErrorMessage> handleBadCred(BadCredentialsException ex) {
-        return new ResponseEntity<>(new ErrorMessage("Invalid username or password", "BadCredentialsException.class"), HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(new ErrorMessage("Invalid username or password", HttpStatus.UNAUTHORIZED), HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<ErrorMessage> handleAccess(AccessDeniedException ex) {
-        return new ResponseEntity<>(new ErrorMessage(ex.getMessage(), "AccessDeniedException.class"), HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>(new ErrorMessage(ex.getMessage(), HttpStatus.FORBIDDEN), HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorMessage> handleOther(Exception ex) {
-        return new ResponseEntity<>(new ErrorMessage(ex.getMessage(), "Exception.class"), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(new ErrorMessage(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }
