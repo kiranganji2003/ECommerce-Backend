@@ -19,7 +19,7 @@ public class Customer {
     private String email;
     private String password;
     private String name;
-    private Long phone;
+    private String phone;
 
     @CreationTimestamp
     @Column(updatable = false)

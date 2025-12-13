@@ -1,6 +1,7 @@
 package com.app.estore.exception;
 
 import lombok.Data;
+import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
 
@@ -8,11 +9,11 @@ import java.time.LocalDateTime;
 public class ErrorMessage {
     private LocalDateTime localDateTime;
     private String errorMessage;
-    private String exceptionClass;
+    private HttpStatus httpStatus;
 
-    public ErrorMessage(String errorMessage, String exceptionClass) {
+    public ErrorMessage(String errorMessage, HttpStatus httpStatus) {
         this.errorMessage = errorMessage;
-        this.exceptionClass = exceptionClass;
+        this.httpStatus = httpStatus;
         this.localDateTime = LocalDateTime.now();
     }
 }
