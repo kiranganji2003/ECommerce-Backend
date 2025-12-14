@@ -1,6 +1,7 @@
 package com.app.estore.controller;
 
 import com.app.estore.request.LoginRequest;
+import com.app.estore.request.ProductRequestDto;
 import com.app.estore.request.RegistrationDto;
 import com.app.estore.response.JwtResponse;
 import com.app.estore.response.Status;
@@ -39,5 +40,10 @@ public class VendorController {
     @PostMapping("/register")
     public ResponseEntity<Status> registerCustomer(@RequestBody RegistrationDto registrationDto) {
         return ResponseEntity.ok(vendorService.registerVendor(registrationDto));
+    }
+
+    @PostMapping("/product")
+    public ResponseEntity<Status> addProduct(@RequestBody ProductRequestDto productRequestDto) {
+        return ResponseEntity.ok(vendorService.addProduct(productRequestDto));
     }
 }
