@@ -6,7 +6,6 @@ import com.app.estore.request.RegistrationDto;
 import com.app.estore.response.Status;
 import com.app.estore.service.VendorService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import static com.app.estore.common.EStoreConstants.*;
