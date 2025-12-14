@@ -1,7 +1,7 @@
 package com.app.estore.controller;
 
-import com.app.estore.request.CustomerRegistrationDto;
 import com.app.estore.request.LoginRequest;
+import com.app.estore.request.RegistrationDto;
 import com.app.estore.response.JwtResponse;
 import com.app.estore.response.Status;
 import com.app.estore.security.JwtTokenProvider;
@@ -33,7 +33,7 @@ public class CustomerController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Status> registerCustomer(@RequestBody CustomerRegistrationDto customerRegistrationDto) {
+    public ResponseEntity<Status> registerCustomer(@RequestBody RegistrationDto customerRegistrationDto) {
         return ResponseEntity.ok(customerService.registerCustomer(customerRegistrationDto));
     }
 }
