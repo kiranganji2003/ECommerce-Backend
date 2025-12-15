@@ -1,5 +1,6 @@
 package com.app.estore.entity;
 
+import com.app.estore.common.ProductCategory;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
@@ -18,6 +19,9 @@ public class Product {
     private String weight;
     private String dimensions;
     private Integer cost;
+
+    @Enumerated(EnumType.STRING)
+    private ProductCategory productCategory;
 
     @ManyToOne
     @JoinColumn(nullable = false)
