@@ -50,7 +50,7 @@ public class VendorServiceImpl implements VendorService {
         product.setVendor(vendor);
         vendor.getProductList().add(product);
         productRepository.save(product);
-        return new Status("Product Added");
+        return new Status(PRODUCT_ADDED_SUCCESSFULLY);
     }
 
     public String getCurrentUsername() {
