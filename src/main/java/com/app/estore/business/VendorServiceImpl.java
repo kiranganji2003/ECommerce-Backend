@@ -44,6 +44,7 @@ public class VendorServiceImpl implements VendorService {
         product.setWeight(productRequestDto.getWeight());
         product.setDimensions(productRequestDto.getDimensions());
         product.setCost(productRequestDto.getCost());
+        product.setProductCategory(productRequestDto.getProductCategory());
 
         Vendor vendor = vendorRepository.findByEmail(getCurrentUsername()).get();
         product.setVendor(vendor);
