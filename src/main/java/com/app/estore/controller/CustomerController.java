@@ -4,7 +4,6 @@ import com.app.estore.request.LoginRequest;
 import com.app.estore.request.RegistrationDto;
 import com.app.estore.response.AllProductsDto;
 import com.app.estore.response.JwtResponse;
-import com.app.estore.response.ShowAllProducts;
 import com.app.estore.response.Status;
 import com.app.estore.security.JwtTokenProvider;
 import com.app.estore.service.CustomerService;

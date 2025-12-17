@@ -60,7 +60,7 @@ public class CustomerServiceImpl implements CustomerService {
 
             allProductsDtoList.add(allProductsDto);
         }
-        
+
         return allProductsDtoList;
     }
 }
