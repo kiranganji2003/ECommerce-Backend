@@ -2,7 +2,9 @@ package com.app.estore.controller;
 
 import com.app.estore.request.LoginRequest;
 import com.app.estore.request.RegistrationDto;
+import com.app.estore.response.AllProductsDto;
 import com.app.estore.response.JwtResponse;
+import com.app.estore.response.ShowAllProducts;
 import com.app.estore.response.Status;
 import com.app.estore.security.JwtTokenProvider;
 import com.app.estore.service.CustomerService;
@@ -11,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/customer")
@@ -35,5 +39,10 @@ public class CustomerController {
     @PostMapping("/register")
     public ResponseEntity<Status> registerCustomer(@RequestBody RegistrationDto customerRegistrationDto) {
         return ResponseEntity.ok(customerService.registerCustomer(customerRegistrationDto));
+    }
+
+    @GetMapping("/products")
+    public ResponseEntity<List<AllProductsDto>> listAllProducts() {
+        return ResponseEntity.ok(customerService.listAllProducts());
     }
 }

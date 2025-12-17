@@ -1,7 +1,9 @@
 package com.app.estore.business;
 
+import com.app.estore.entity.AllProducts;
 import com.app.estore.entity.Product;
 import com.app.estore.entity.Vendor;
+import com.app.estore.repository.AllProductsRepository;
 import com.app.estore.repository.ProductRepository;
 import com.app.estore.repository.VendorRepository;
 import com.app.estore.request.ProductRequestDto;
@@ -23,6 +25,7 @@ public class VendorServiceImpl implements VendorService {
     private final VendorRepository vendorRepository;
     private final PasswordEncoder bCryptPasswordEncoder;
     private final ProductRepository productRepository;
+    private final AllProductsRepository allProductsRepository;
 
     @Override
     public Status registerVendor(RegistrationDto registrationDto) {
@@ -49,7 +52,16 @@ public class VendorServiceImpl implements VendorService {
         Vendor vendor = vendorRepository.findByEmail(getCurrentUsername()).get();
         product.setVendor(vendor);
         vendor.getProductList().add(product);
-        productRepository.save(product);
+        product = productRepository.save(product);
+
+        AllProducts allProductsObject = new AllProducts();
+        allProductsObject.setProductId(product.getProductId());
+        allProductsObject.setVendorId(vendor.getVendorId());
+        allProductsObject.setCost(product.getCost());
+        allProductsObject.setProductCategory(product.getProductCategory());
+
+        allProductsRepository.save(allProductsObject);
+
         return new Status(PRODUCT_ADDED_SUCCESSFULLY);
     }
 
