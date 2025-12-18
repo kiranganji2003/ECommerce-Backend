@@ -42,6 +42,12 @@ public class CustomerController {
 
     @GetMapping("/products")
     public ResponseEntity<List<AllProductsDto>> listAllProducts() {
-        return ResponseEntity.ok(customerService.listAllProducts());
+        return ResponseEntity.ok(customerService.findAllProducts());
+    }
+
+    @GetMapping("/products/cost")
+    public ResponseEntity<List<AllProductsDto>> listAllProductsByCost(@RequestParam Integer min,
+                                                                      @RequestParam Integer max) {
+        return ResponseEntity.ok(customerService.findProductsByCostRange(min, max));
     }
 }

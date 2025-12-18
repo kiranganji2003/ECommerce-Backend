@@ -1,5 +1,6 @@
 package com.app.estore.business;
 
+import com.app.estore.common.ProductModelMapper;
 import com.app.estore.entity.AllProducts;
 import com.app.estore.entity.Customer;
 import com.app.estore.entity.Product;
@@ -27,6 +28,7 @@ public class CustomerServiceImpl implements CustomerService {
     private final PasswordEncoder bCryptPasswordEncoder;
     private final AllProductsRepository allProductsRepository;
     private final ProductRepository productRepository;
+    private final ProductModelMapper productModelMapper;
 
     @Override
     public Status registerCustomer(RegistrationDto registrationDto) {
@@ -40,25 +42,29 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<AllProductsDto> listAllProducts() {
+    public List<AllProductsDto> findAllProducts() {
 
         List<AllProducts> allProductsList = allProductsRepository.findAll();
         List<AllProductsDto> allProductsDtoList = new ArrayList<>();
 
         for(AllProducts allProducts : allProductsList) {
             Product product = productRepository.getReferenceById(allProducts.getProductId());
-            AllProductsDto allProductsDto = new AllProductsDto();
+            allProductsDtoList.add(productModelMapper.convert(product));
+        }
 
-            allProductsDto.setProductId(product.getProductId());
-            allProductsDto.setVendorId(allProducts.getVendorId());
-            allProductsDto.setTitle(product.getTitle());
-            allProductsDto.setDescription(product.getDescription());
-            allProductsDto.setWeight(product.getWeight());
-            allProductsDto.setDimensions(product.getDimensions());
-            allProductsDto.setCost(product.getCost());
-            allProductsDto.setProductCategory(product.getProductCategory());
+        return allProductsDtoList;
+    }
 
-            allProductsDtoList.add(allProductsDto);
+    @Override
+    public List<AllProductsDto> findProductsByCostRange(Integer min, Integer max) {
+
+        List<AllProducts> allProductsList = allProductsRepository.findProductsByCostRange(min, max);
+
+        List<AllProductsDto> allProductsDtoList = new ArrayList<>();
+
+        for(AllProducts allProducts : allProductsList) {
+            Product product = productRepository.getReferenceById(allProducts.getProductId());
+            allProductsDtoList.add(productModelMapper.convert(product));
         }
 
         return allProductsDtoList;
