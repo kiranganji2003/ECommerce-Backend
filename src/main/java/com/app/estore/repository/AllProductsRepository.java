@@ -1,7 +1,7 @@
 package com.app.estore.repository;
 
+import com.app.estore.common.ProductCategory;
 import com.app.estore.entity.AllProducts;
-import com.app.estore.entity.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -21,5 +21,13 @@ public interface AllProductsRepository extends JpaRepository<AllProducts, Intege
             @Param("minCost") Integer minCost,
             @Param("maxCost") Integer maxCost
     );
+
+    @Query("""
+            SELECT ap
+            FROM AllProducts ap
+            WHERE ap.productCategory = :category
+            """)
+    List<AllProducts> findByProductCategory(@Param("category") ProductCategory category);
+
 
 }

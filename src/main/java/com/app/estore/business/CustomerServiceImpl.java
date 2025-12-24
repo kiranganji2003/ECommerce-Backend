@@ -1,5 +1,6 @@
 package com.app.estore.business;
 
+import com.app.estore.common.ProductCategory;
 import com.app.estore.common.ProductModelMapper;
 import com.app.estore.entity.AllProducts;
 import com.app.estore.entity.Customer;
@@ -69,4 +70,19 @@ public class CustomerServiceImpl implements CustomerService {
 
         return allProductsDtoList;
     }
+
+    @Override
+    public List<AllProductsDto> getProductsByCategory(ProductCategory category) {
+        List<AllProducts> allProductsList = allProductsRepository.findByProductCategory(category);
+
+        List<AllProductsDto> allProductsDtoList = new ArrayList<>();
+
+        for(AllProducts allProducts : allProductsList) {
+            Product product = productRepository.getReferenceById(allProducts.getProductId());
+            allProductsDtoList.add(productModelMapper.convert(product));
+        }
+
+        return allProductsDtoList;
+    }
+
 }
