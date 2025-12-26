@@ -4,7 +4,6 @@ import com.app.estore.response.ListProductResponse;
 import com.app.estore.utility.ProductCategory;
 import com.app.estore.request.LoginRequest;
 import com.app.estore.request.RegistrationDto;
-import com.app.estore.response.AllProductsDto;
 import com.app.estore.response.JwtResponse;
 import com.app.estore.response.Status;
 import com.app.estore.security.JwtTokenProvider;
@@ -14,8 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/customer")
@@ -57,4 +54,9 @@ public class CustomerController {
     public ResponseEntity<ListProductResponse> getProductsByCategory(@RequestParam ProductCategory category) {
         return ResponseEntity.ok(customerService.getProductsByCategory(category));
     }
+
+//    @GetMapping("/products/profile")
+//    public ResponseEntity<CustomerProfileDto> getCustomerProfile() {
+//        return
+//    }
 }

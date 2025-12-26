@@ -10,7 +10,7 @@ import com.app.estore.repository.AllProductsRepository;
 import com.app.estore.repository.CustomerRepository;
 import com.app.estore.repository.ProductRepository;
 import com.app.estore.request.RegistrationDto;
-import com.app.estore.response.AllProductsDto;
+import com.app.estore.response.CustomerProductDto;
 import com.app.estore.response.Status;
 import com.app.estore.service.CustomerService;
 import lombok.RequiredArgsConstructor;
@@ -47,14 +47,14 @@ public class CustomerServiceImpl implements CustomerService {
     public ListProductResponse findAllProducts() {
 
         List<AllProducts> allProductsList = allProductsRepository.findAll();
-        List<AllProductsDto> allProductsDtoList = new ArrayList<>();
+        List<CustomerProductDto> customerProductDtoList = new ArrayList<>();
 
         for(AllProducts allProducts : allProductsList) {
             Product product = productRepository.getReferenceById(allProducts.getProductId());
-            allProductsDtoList.add(productModelMapper.convert(product));
+            customerProductDtoList.add(productModelMapper.convert(product));
         }
 
-        return new ListProductResponse(allProductsDtoList);
+        return new ListProductResponse(customerProductDtoList);
     }
 
     @Override
@@ -62,28 +62,28 @@ public class CustomerServiceImpl implements CustomerService {
 
         List<AllProducts> allProductsList = allProductsRepository.findProductsByCostRange(min, max);
 
-        List<AllProductsDto> allProductsDtoList = new ArrayList<>();
+        List<CustomerProductDto> customerProductDtoList = new ArrayList<>();
 
         for(AllProducts allProducts : allProductsList) {
             Product product = productRepository.getReferenceById(allProducts.getProductId());
-            allProductsDtoList.add(productModelMapper.convert(product));
+            customerProductDtoList.add(productModelMapper.convert(product));
         }
 
-        return new ListProductResponse(allProductsDtoList);
+        return new ListProductResponse(customerProductDtoList);
     }
 
     @Override
     public ListProductResponse getProductsByCategory(ProductCategory category) {
         List<AllProducts> allProductsList = allProductsRepository.findByProductCategory(category);
 
-        List<AllProductsDto> allProductsDtoList = new ArrayList<>();
+        List<CustomerProductDto> customerProductDtoList = new ArrayList<>();
 
         for(AllProducts allProducts : allProductsList) {
             Product product = productRepository.getReferenceById(allProducts.getProductId());
-            allProductsDtoList.add(productModelMapper.convert(product));
+            customerProductDtoList.add(productModelMapper.convert(product));
         }
 
-        return new ListProductResponse(allProductsDtoList);
+        return new ListProductResponse(customerProductDtoList);
     }
 
 }
