@@ -1,4 +1,4 @@
-package com.app.estore.common;
+package com.app.estore.utility;
 
 public enum ProductCategory {
     ELECTRONICS,

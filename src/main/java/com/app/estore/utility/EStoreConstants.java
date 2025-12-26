@@ -1,4 +1,4 @@
-package com.app.estore.common;
+package com.app.estore.utility;
 
 public class EStoreConstants {
     public static final String REGISTERED_SUCCESSFULLY = "Registered Successfully";

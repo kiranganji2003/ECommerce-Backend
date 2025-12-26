@@ -1,4 +1,4 @@
-package com.app.estore.common;
+package com.app.estore.utility;
 
 import com.app.estore.entity.Product;
 import com.app.estore.response.AllProductsDto;

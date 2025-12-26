@@ -1,6 +1,6 @@
 package com.app.estore.entity;
 
-import com.app.estore.common.ProductCategory;
+import com.app.estore.utility.ProductCategory;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

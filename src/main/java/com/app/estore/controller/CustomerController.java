@@ -1,6 +1,6 @@
 package com.app.estore.controller;
 
-import com.app.estore.common.ProductCategory;
+import com.app.estore.utility.ProductCategory;
 import com.app.estore.request.LoginRequest;
 import com.app.estore.request.RegistrationDto;
 import com.app.estore.response.AllProductsDto;
