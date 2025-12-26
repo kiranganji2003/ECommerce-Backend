@@ -1,6 +1,6 @@
 package com.app.estore.request;
 
-import com.app.estore.common.ProductCategory;
+import com.app.estore.utility.ProductCategory;
 import lombok.Data;
 
 @Data

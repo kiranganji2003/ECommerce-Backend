@@ -1,6 +1,6 @@
 package com.app.estore.entity;
 
-import com.app.estore.common.ProductCategory;
+import com.app.estore.utility.ProductCategory;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;

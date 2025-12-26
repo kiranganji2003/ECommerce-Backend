@@ -1,7 +1,7 @@
 package com.app.estore.business;
 
-import com.app.estore.common.ProductCategory;
-import com.app.estore.common.ProductModelMapper;
+import com.app.estore.utility.ProductCategory;
+import com.app.estore.utility.ProductModelMapper;
 import com.app.estore.entity.AllProducts;
 import com.app.estore.entity.Customer;
 import com.app.estore.entity.Product;
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.app.estore.common.EStoreConstants.*;
+import static com.app.estore.utility.EStoreConstants.*;
 
 @Service
 @RequiredArgsConstructor

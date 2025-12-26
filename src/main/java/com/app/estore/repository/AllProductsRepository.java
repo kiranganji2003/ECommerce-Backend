@@ -1,6 +1,6 @@
 package com.app.estore.repository;
 
-import com.app.estore.common.ProductCategory;
+import com.app.estore.utility.ProductCategory;
 import com.app.estore.entity.AllProducts;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
