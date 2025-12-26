@@ -1,6 +1,7 @@
 package com.app.estore.business;
 
-import com.app.estore.response.ListProductResponse;
+import com.app.estore.response.CustomerProfileDto;
+import com.app.estore.response.CustomerProductResponse;
 import com.app.estore.utility.ProductCategory;
 import com.app.estore.utility.ProductModelMapper;
 import com.app.estore.entity.AllProducts;
@@ -44,7 +45,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public ListProductResponse findAllProducts() {
+    public CustomerProductResponse findAllProducts() {
 
         List<AllProducts> allProductsList = allProductsRepository.findAll();
         List<CustomerProductDto> customerProductDtoList = new ArrayList<>();
@@ -54,11 +55,11 @@ public class CustomerServiceImpl implements CustomerService {
             customerProductDtoList.add(productModelMapper.convert(product));
         }
 
-        return new ListProductResponse(customerProductDtoList);
+        return new CustomerProductResponse(customerProductDtoList);
     }
 
     @Override
-    public ListProductResponse findProductsByCostRange(Integer min, Integer max) {
+    public CustomerProductResponse findProductsByCostRange(Integer min, Integer max) {
 
         List<AllProducts> allProductsList = allProductsRepository.findProductsByCostRange(min, max);
 
@@ -69,11 +70,11 @@ public class CustomerServiceImpl implements CustomerService {
             customerProductDtoList.add(productModelMapper.convert(product));
         }
 
-        return new ListProductResponse(customerProductDtoList);
+        return new CustomerProductResponse(customerProductDtoList);
     }
 
     @Override
-    public ListProductResponse getProductsByCategory(ProductCategory category) {
+    public CustomerProductResponse getProductsByCategory(ProductCategory category) {
         List<AllProducts> allProductsList = allProductsRepository.findByProductCategory(category);
 
         List<CustomerProductDto> customerProductDtoList = new ArrayList<>();
@@ -83,7 +84,17 @@ public class CustomerServiceImpl implements CustomerService {
             customerProductDtoList.add(productModelMapper.convert(product));
         }
 
-        return new ListProductResponse(customerProductDtoList);
+        return new CustomerProductResponse(customerProductDtoList);
+    }
+
+    @Override
+    public CustomerProfileDto getCustomerProfile() {
+        return null;
+    }
+
+    @Override
+    public CustomerProductDto getProductById(Integer productId) {
+        return null;
     }
 
 }

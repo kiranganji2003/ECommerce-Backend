@@ -7,6 +7,6 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
-public class ListProductResponse {
+public class CustomerProductResponse {
     private List<CustomerProductDto> productsList;
 }
