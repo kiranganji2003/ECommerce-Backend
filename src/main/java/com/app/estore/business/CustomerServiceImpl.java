@@ -1,5 +1,6 @@
 package com.app.estore.business;
 
+import com.app.estore.response.ListProductResponse;
 import com.app.estore.utility.ProductCategory;
 import com.app.estore.utility.ProductModelMapper;
 import com.app.estore.entity.AllProducts;
@@ -43,7 +44,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<AllProductsDto> findAllProducts() {
+    public ListProductResponse findAllProducts() {
 
         List<AllProducts> allProductsList = allProductsRepository.findAll();
         List<AllProductsDto> allProductsDtoList = new ArrayList<>();
@@ -53,11 +54,11 @@ public class CustomerServiceImpl implements CustomerService {
             allProductsDtoList.add(productModelMapper.convert(product));
         }
 
-        return allProductsDtoList;
+        return new ListProductResponse(allProductsDtoList);
     }
 
     @Override
-    public List<AllProductsDto> findProductsByCostRange(Integer min, Integer max) {
+    public ListProductResponse findProductsByCostRange(Integer min, Integer max) {
 
         List<AllProducts> allProductsList = allProductsRepository.findProductsByCostRange(min, max);
 
@@ -68,11 +69,11 @@ public class CustomerServiceImpl implements CustomerService {
             allProductsDtoList.add(productModelMapper.convert(product));
         }
 
-        return allProductsDtoList;
+        return new ListProductResponse(allProductsDtoList);
     }
 
     @Override
-    public List<AllProductsDto> getProductsByCategory(ProductCategory category) {
+    public ListProductResponse getProductsByCategory(ProductCategory category) {
         List<AllProducts> allProductsList = allProductsRepository.findByProductCategory(category);
 
         List<AllProductsDto> allProductsDtoList = new ArrayList<>();
@@ -82,7 +83,7 @@ public class CustomerServiceImpl implements CustomerService {
             allProductsDtoList.add(productModelMapper.convert(product));
         }
 
-        return allProductsDtoList;
+        return new ListProductResponse(allProductsDtoList);
     }
 
 }
