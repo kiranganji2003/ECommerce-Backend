@@ -1,25 +1,25 @@
 package com.app.estore.utility;
 
 import com.app.estore.entity.Product;
-import com.app.estore.response.AllProductsDto;
+import com.app.estore.response.CustomerProductDto;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ProductModelMapper {
 
-    public AllProductsDto convert(Product product) {
-        AllProductsDto allProductsDto = new AllProductsDto();
+    public CustomerProductDto convert(Product product) {
+        CustomerProductDto customerProductDto = new CustomerProductDto();
 
-        allProductsDto.setProductId(product.getProductId());
-        allProductsDto.setVendorId(product.getVendor().getVendorId());
-        allProductsDto.setTitle(product.getTitle());
-        allProductsDto.setDescription(product.getDescription());
-        allProductsDto.setWeight(product.getWeight());
-        allProductsDto.setDimensions(product.getDimensions());
-        allProductsDto.setCost(product.getCost());
-        allProductsDto.setProductCategory(product.getProductCategory());
+        customerProductDto.setProductId(product.getProductId());
+        customerProductDto.setVendorId(product.getVendor().getVendorId());
+        customerProductDto.setTitle(product.getTitle());
+        customerProductDto.setDescription(product.getDescription());
+        customerProductDto.setWeight(product.getWeight());
+        customerProductDto.setDimensions(product.getDimensions());
+        customerProductDto.setCost(product.getCost());
+        customerProductDto.setProductCategory(product.getProductCategory());
 
-        return allProductsDto;
+        return customerProductDto;
     }
 
 }

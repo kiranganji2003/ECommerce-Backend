@@ -6,7 +6,7 @@ import jakarta.persistence.Enumerated;
 import lombok.Data;
 
 @Data
-public class AllProductsDto {
+public class CustomerProductDto {
     private Integer productId;
     private Integer vendorId;
     private String title;
