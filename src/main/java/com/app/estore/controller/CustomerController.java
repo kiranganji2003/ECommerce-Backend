@@ -1,5 +1,6 @@
 package com.app.estore.controller;
 
+import com.app.estore.response.ListProductResponse;
 import com.app.estore.utility.ProductCategory;
 import com.app.estore.request.LoginRequest;
 import com.app.estore.request.RegistrationDto;
@@ -42,18 +43,18 @@ public class CustomerController {
     }
 
     @GetMapping("/products")
-    public ResponseEntity<List<AllProductsDto>> listAllProducts() {
+    public ResponseEntity<ListProductResponse> listAllProducts() {
         return ResponseEntity.ok(customerService.findAllProducts());
     }
 
     @GetMapping("/products/cost")
-    public ResponseEntity<List<AllProductsDto>> listAllProductsByCost(@RequestParam Integer min,
-                                                                      @RequestParam Integer max) {
+    public ResponseEntity<ListProductResponse> listAllProductsByCost(@RequestParam Integer min,
+                                                                     @RequestParam Integer max) {
         return ResponseEntity.ok(customerService.findProductsByCostRange(min, max));
     }
 
     @GetMapping("/products/category")
-    public ResponseEntity<List<AllProductsDto>> getProductsByCategory(@RequestParam ProductCategory category) {
+    public ResponseEntity<ListProductResponse> getProductsByCategory(@RequestParam ProductCategory category) {
         return ResponseEntity.ok(customerService.getProductsByCategory(category));
     }
 }

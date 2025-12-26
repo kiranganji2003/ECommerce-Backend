@@ -1,15 +1,15 @@
 package com.app.estore.service;
 
+import com.app.estore.response.ListProductResponse;
 import com.app.estore.utility.ProductCategory;
 import com.app.estore.request.RegistrationDto;
-import com.app.estore.response.AllProductsDto;
 import com.app.estore.response.Status;
 
 import java.util.List;
 
 public interface CustomerService {
     Status registerCustomer(RegistrationDto customerRegistrationDto);
-    List<AllProductsDto> findAllProducts();
-    List<AllProductsDto> findProductsByCostRange(Integer min, Integer max);
-    List<AllProductsDto> getProductsByCategory(ProductCategory category);
+    ListProductResponse findAllProducts();
+    ListProductResponse findProductsByCostRange(Integer min, Integer max);
+    ListProductResponse getProductsByCategory(ProductCategory category);
 }
