@@ -2,6 +2,8 @@ package com.app.estore.business;
 
 import com.app.estore.response.CustomerProfileDto;
 import com.app.estore.response.CustomerProductResponse;
+import com.app.estore.utility.CurrentUser;
+import com.app.estore.utility.CustomerModelMapper;
 import com.app.estore.utility.ProductCategory;
 import com.app.estore.utility.ProductModelMapper;
 import com.app.estore.entity.AllProducts;
@@ -32,6 +34,8 @@ public class CustomerServiceImpl implements CustomerService {
     private final AllProductsRepository allProductsRepository;
     private final ProductRepository productRepository;
     private final ProductModelMapper productModelMapper;
+    private final CustomerModelMapper customerModelMapper;
+    private final CurrentUser currentUser;
 
     @Override
     public Status registerCustomer(RegistrationDto registrationDto) {
@@ -89,12 +93,14 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerProfileDto getCustomerProfile() {
-        return null;
+        Customer customer = customerRepository.findByEmail(currentUser.getCurrentUsername()).get();
+        return customerModelMapper.convertToCustomerDto(customer);
     }
 
     @Override
     public CustomerProductDto getProductById(Integer productId) {
-        return null;
+        Product product = productRepository.getReferenceById(productId);
+        return productModelMapper.convert(product);
     }
 
 }
