@@ -1,11 +1,9 @@
 package com.app.estore.controller;
 
-import com.app.estore.response.CustomerProductResponse;
+import com.app.estore.response.*;
 import com.app.estore.utility.ProductCategory;
 import com.app.estore.request.LoginRequest;
 import com.app.estore.request.RegistrationDto;
-import com.app.estore.response.JwtResponse;
-import com.app.estore.response.Status;
 import com.app.estore.security.JwtTokenProvider;
 import com.app.estore.service.CustomerService;
 import lombok.RequiredArgsConstructor;
@@ -55,8 +53,13 @@ public class CustomerController {
         return ResponseEntity.ok(customerService.getProductsByCategory(category));
     }
 
-//    @GetMapping("/products/profile")
-//    public ResponseEntity<CustomerProfileDto> getCustomerProfile() {
-//        return
-//    }
+    @GetMapping("/profile")
+    public ResponseEntity<CustomerProfileDto> getCustomerProfile() {
+        return ResponseEntity.ok(customerService.getCustomerProfile());
+    }
+
+    @GetMapping("/products/{productId}")
+    public ResponseEntity<CustomerProductDto> getProductById(@PathVariable Integer productId) {
+        return ResponseEntity.ok(customerService.getProductById(productId));
+    }
 }

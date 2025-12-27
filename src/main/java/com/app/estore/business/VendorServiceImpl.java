@@ -10,10 +10,9 @@ import com.app.estore.request.ProductRequestDto;
 import com.app.estore.request.RegistrationDto;
 import com.app.estore.response.Status;
 import com.app.estore.service.VendorService;
+import com.app.estore.utility.CurrentUser;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import static com.app.estore.utility.EStoreConstants.*;
@@ -26,6 +25,7 @@ public class VendorServiceImpl implements VendorService {
     private final PasswordEncoder bCryptPasswordEncoder;
     private final ProductRepository productRepository;
     private final AllProductsRepository allProductsRepository;
+    private final CurrentUser currentUser;
 
     @Override
     public Status registerVendor(RegistrationDto registrationDto) {
@@ -49,7 +49,7 @@ public class VendorServiceImpl implements VendorService {
         product.setCost(productRequestDto.getCost());
         product.setProductCategory(productRequestDto.getProductCategory());
 
-        Vendor vendor = vendorRepository.findByEmail(getCurrentUsername()).get();
+        Vendor vendor = vendorRepository.findByEmail(currentUser.getCurrentUsername()).get();
         product.setVendor(vendor);
         vendor.getProductList().add(product);
         product = productRepository.save(product);
@@ -63,12 +63,5 @@ public class VendorServiceImpl implements VendorService {
         allProductsRepository.save(allProductsObject);
 
         return new Status(PRODUCT_ADDED_SUCCESSFULLY);
-    }
-
-    public String getCurrentUsername() {
-        Authentication authentication =
-                SecurityContextHolder.getContext().getAuthentication();
-
-        return authentication.getName(); // username
     }
 }
