@@ -50,8 +50,8 @@ public class VendorController {
         return ResponseEntity.ok(vendorService.getVendorProfile());
     }
 
-    @DeleteMapping("/products/{productId}")
-    public ResponseEntity<Status> deleteProductById(Integer productId) {
+    @DeleteMapping("/product/{productId}")
+    public ResponseEntity<Status> deleteProductById(@PathVariable Integer productId) {
         return ResponseEntity.ok(vendorService.deleteProductById(productId));
     }
 }
