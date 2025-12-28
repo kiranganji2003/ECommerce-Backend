@@ -5,6 +5,7 @@ import com.app.estore.request.ProductRequestDto;
 import com.app.estore.request.RegistrationDto;
 import com.app.estore.response.JwtResponse;
 import com.app.estore.response.Status;
+import com.app.estore.response.VendorProfileDto;
 import com.app.estore.security.JwtTokenProvider;
 import com.app.estore.service.VendorService;
 import lombok.RequiredArgsConstructor;
@@ -12,10 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/vendor")
@@ -45,5 +43,15 @@ public class VendorController {
     @PostMapping("/product")
     public ResponseEntity<Status> addProduct(@RequestBody ProductRequestDto productRequestDto) {
         return ResponseEntity.ok(vendorService.addProduct(productRequestDto));
+    }
+
+    @GetMapping("/profile")
+    public ResponseEntity<VendorProfileDto> getVendorProfile() {
+        return ResponseEntity.ok(vendorService.getVendorProfile());
+    }
+
+    @DeleteMapping("/products/{productId}")
+    public ResponseEntity<Status> deleteProductById(Integer productId) {
+        return ResponseEntity.ok(vendorService.deleteProductById(productId));
     }
 }
