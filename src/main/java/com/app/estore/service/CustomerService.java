@@ -1,12 +1,9 @@
 package com.app.estore.service;
 
 import com.app.estore.request.CartRequestDto;
-import com.app.estore.response.CustomerProductDto;
-import com.app.estore.response.CustomerProfileDto;
-import com.app.estore.response.CustomerProductResponse;
+import com.app.estore.response.*;
 import com.app.estore.utility.ProductCategory;
 import com.app.estore.request.RegistrationDto;
-import com.app.estore.response.Status;
 
 public interface CustomerService {
     Status registerCustomer(RegistrationDto customerRegistrationDto);
@@ -19,4 +16,5 @@ public interface CustomerService {
     CustomerProductResponse getWishlistProducts();
     Status removeProductFromWishlist(Integer productId);
     Status updateProductToCart(CartRequestDto cartRequestDto);
+    CartResponseDto viewCart();
 }

@@ -3,15 +3,12 @@ package com.app.estore.business;
 import com.app.estore.entity.*;
 import com.app.estore.repository.*;
 import com.app.estore.request.CartRequestDto;
-import com.app.estore.response.CustomerProfileDto;
-import com.app.estore.response.CustomerProductResponse;
+import com.app.estore.response.*;
 import com.app.estore.utility.CurrentUser;
 import com.app.estore.utility.CustomerModelMapper;
 import com.app.estore.utility.ProductCategory;
 import com.app.estore.utility.ProductModelMapper;
 import com.app.estore.request.RegistrationDto;
-import com.app.estore.response.CustomerProductDto;
-import com.app.estore.response.Status;
 import com.app.estore.service.CustomerService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -177,6 +174,40 @@ public class CustomerServiceImpl implements CustomerService {
         }
 
         return new Status(SUCCESS);
+    }
+
+    @Override
+    public CartResponseDto viewCart() {
+        Map<Integer, Integer> productToQuantityMap = customerCartRepository.findById(getCustomerId()).get().getProductToQuantityMap();
+
+        List<CartResponseDto.CartProduct> cartProductList = new ArrayList<>();
+        Integer cartTotalCost = 0;
+
+        for(Integer productId : productToQuantityMap.keySet()) {
+
+            Product product = productRepository.findById(productId).get();
+            CartResponseDto.CartProduct cartProduct = new CartResponseDto.CartProduct();
+
+            cartProduct.setProductId(productId);
+            cartProduct.setVendorId(product.getVendor().getVendorId());
+            cartProduct.setTitle(product.getTitle());
+            cartProduct.setDescription(product.getDescription());
+            cartProduct.setWeight(product.getWeight());
+            cartProduct.setDimensions(product.getDimensions());
+            cartProduct.setCost(product.getCost());
+            cartProduct.setProductCategory(product.getProductCategory());
+            cartProduct.setProductQuantity(productToQuantityMap.get(productId));
+            cartProduct.setTotalCost(cartProduct.getCost() * cartProduct.getProductQuantity());
+
+            cartTotalCost += cartProduct.getTotalCost();
+            cartProductList.add(cartProduct);
+        }
+
+        CartResponseDto cartResponseDto = new CartResponseDto();
+        cartResponseDto.setCartProductList(cartProductList);
+        cartResponseDto.setCartTotalCost(cartTotalCost);
+
+        return cartResponseDto;
     }
 
     private Integer getCustomerId() {

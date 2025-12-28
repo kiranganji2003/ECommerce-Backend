@@ -13,7 +13,7 @@ import java.util.Map;
 public class CustomerCart {
     @Id
     private Integer customerId;
-    
+
     @ElementCollection
     private Map<Integer, Integer> productToQuantityMap = new HashMap<>();
 }
