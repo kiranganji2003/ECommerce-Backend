@@ -38,7 +38,7 @@ public class VendorServiceImpl implements VendorService {
         vendor.setName(registrationDto.getName());
         vendor.setPhone(registrationDto.getPhone());
         vendorRepository.save(vendor);
-        return new Status(REGISTERED_SUCCESSFULLY);
+        return new Status(SUCCESS);
     }
 
     @Override
@@ -65,7 +65,7 @@ public class VendorServiceImpl implements VendorService {
 
         allProductsRepository.save(allProductsObject);
 
-        return new Status(PRODUCT_ADDED_SUCCESSFULLY);
+        return new Status(SUCCESS);
     }
 
     @Override
@@ -84,6 +84,6 @@ public class VendorServiceImpl implements VendorService {
         product.setVendor(null);
         allProductsRepository.deleteById(productId);
 
-        return new Status(PRODUCT_DELETED_SUCCESSFULLY);
+        return new Status(SUCCESS);
     }
 }

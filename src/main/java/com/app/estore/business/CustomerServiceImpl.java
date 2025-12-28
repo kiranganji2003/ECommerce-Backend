@@ -1,5 +1,7 @@
 package com.app.estore.business;
 
+import com.app.estore.entity.Wishlist;
+import com.app.estore.repository.WishlistRepository;
 import com.app.estore.response.CustomerProfileDto;
 import com.app.estore.response.CustomerProductResponse;
 import com.app.estore.utility.CurrentUser;
@@ -16,6 +18,7 @@ import com.app.estore.request.RegistrationDto;
 import com.app.estore.response.CustomerProductDto;
 import com.app.estore.response.Status;
 import com.app.estore.service.CustomerService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -36,16 +39,23 @@ public class CustomerServiceImpl implements CustomerService {
     private final ProductModelMapper productModelMapper;
     private final CustomerModelMapper customerModelMapper;
     private final CurrentUser currentUser;
+    private final WishlistRepository wishlistRepository;
 
     @Override
+    @Transactional
     public Status registerCustomer(RegistrationDto registrationDto) {
         Customer customer = new Customer();
         customer.setEmail(registrationDto.getEmail());
         customer.setPassword(bCryptPasswordEncoder.encode(registrationDto.getPassword()));
         customer.setName(registrationDto.getName());
         customer.setPhone(registrationDto.getPhone());
-        customerRepository.save(customer);
-        return new Status(REGISTERED_SUCCESSFULLY);
+        customer = customerRepository.save(customer);
+
+        Wishlist wishlist = new Wishlist();
+        wishlist.setCustomerId(customer.getCustomerId());
+        wishlistRepository.save(wishlist);
+
+        return new Status(SUCCESS);
     }
 
     @Override
@@ -101,6 +111,23 @@ public class CustomerServiceImpl implements CustomerService {
     public CustomerProductDto getProductById(Integer productId) {
         Product product = productRepository.getReferenceById(productId);
         return productModelMapper.convert(product);
+    }
+
+    @Override
+    @Transactional
+    public Status addProductInWishlist(Integer productId) {
+
+        if(productRepository.findById(productId).isEmpty()) {
+            return new Status(FAILURE);
+        }
+
+        Wishlist wishlist = wishlistRepository.findById(getCustomerId()).get();
+        wishlist.getProductIdSet().add(productId);
+        return new Status(SUCCESS);
+    }
+
+    private Integer getCustomerId() {
+        return customerRepository.findByEmail(currentUser.getCurrentUsername()).get().getCustomerId();
     }
 
 }
