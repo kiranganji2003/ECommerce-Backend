@@ -83,4 +83,9 @@ public class CustomerController {
     public ResponseEntity<Status> updateProductToCart(@RequestBody CartRequestDto cartRequestDto) {
         return ResponseEntity.ok(customerService.updateProductToCart(cartRequestDto));
     }
+
+    @GetMapping("/cart")
+    public ResponseEntity<CartResponseDto> viewCart() {
+        return ResponseEntity.ok(customerService.viewCart());
+    }
 }
