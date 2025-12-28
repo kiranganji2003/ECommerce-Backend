@@ -72,4 +72,9 @@ public class CustomerController {
     public ResponseEntity<CustomerProductResponse> getWishlistProducts() {
         return ResponseEntity.ok(customerService.getWishlistProducts());
     }
+
+    @DeleteMapping("/wishlist/{productId}")
+    public ResponseEntity<Status> removeProductFromWishlist(@PathVariable Integer productId) {
+        return ResponseEntity.ok(customerService.removeProductFromWishlist(productId));
+    }
 }

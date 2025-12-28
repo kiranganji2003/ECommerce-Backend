@@ -16,4 +16,5 @@ public interface CustomerService {
     CustomerProductDto getProductById(Integer productId);
     Status addProductInWishlist(Integer productId);
     CustomerProductResponse getWishlistProducts();
+    Status removeProductFromWishlist(Integer productId);
 }
