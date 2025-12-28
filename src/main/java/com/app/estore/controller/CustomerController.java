@@ -1,5 +1,6 @@
 package com.app.estore.controller;
 
+import com.app.estore.request.CartRequestDto;
 import com.app.estore.response.*;
 import com.app.estore.utility.ProductCategory;
 import com.app.estore.request.LoginRequest;
@@ -76,5 +77,10 @@ public class CustomerController {
     @DeleteMapping("/wishlist/{productId}")
     public ResponseEntity<Status> removeProductFromWishlist(@PathVariable Integer productId) {
         return ResponseEntity.ok(customerService.removeProductFromWishlist(productId));
+    }
+
+    @PostMapping("/cart")
+    public ResponseEntity<Status> updateProductToCart(@RequestBody CartRequestDto cartRequestDto) {
+        return ResponseEntity.ok(customerService.updateProductToCart(cartRequestDto));
     }
 }
