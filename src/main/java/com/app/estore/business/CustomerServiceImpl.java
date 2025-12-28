@@ -23,8 +23,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static com.app.estore.utility.EStoreConstants.*;
 
@@ -124,6 +123,34 @@ public class CustomerServiceImpl implements CustomerService {
         Wishlist wishlist = wishlistRepository.findById(getCustomerId()).get();
         wishlist.getProductIdSet().add(productId);
         return new Status(SUCCESS);
+    }
+
+    @Override
+    @Transactional
+    public CustomerProductResponse getWishlistProducts() {
+
+        Wishlist wishlist = wishlistRepository.findById(getCustomerId()).get();
+        Set<Integer> productIdSet = wishlist.getProductIdSet();
+        List<CustomerProductDto> customerProductDtoList = new ArrayList<>();
+        Set<Integer> removeProductsSet = new HashSet<>();
+
+        for(Integer productId : productIdSet) {
+            Optional<Product> product = productRepository.findById(productId);
+
+            if(product.isEmpty()) {
+                removeProductsSet.add(productId);
+            }
+            else {
+                customerProductDtoList.add(productModelMapper.convert(product.get()));
+            }
+
+        }
+
+        for(Integer productId : removeProductsSet) {
+            wishlist.getProductIdSet().remove(productId);
+        }
+
+        return new CustomerProductResponse(customerProductDtoList);
     }
 
     private Integer getCustomerId() {
