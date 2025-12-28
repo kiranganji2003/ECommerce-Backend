@@ -1,19 +1,14 @@
 package com.app.estore.business;
 
-import com.app.estore.entity.Wishlist;
-import com.app.estore.repository.WishlistRepository;
+import com.app.estore.entity.*;
+import com.app.estore.repository.*;
+import com.app.estore.request.CartRequestDto;
 import com.app.estore.response.CustomerProfileDto;
 import com.app.estore.response.CustomerProductResponse;
 import com.app.estore.utility.CurrentUser;
 import com.app.estore.utility.CustomerModelMapper;
 import com.app.estore.utility.ProductCategory;
 import com.app.estore.utility.ProductModelMapper;
-import com.app.estore.entity.AllProducts;
-import com.app.estore.entity.Customer;
-import com.app.estore.entity.Product;
-import com.app.estore.repository.AllProductsRepository;
-import com.app.estore.repository.CustomerRepository;
-import com.app.estore.repository.ProductRepository;
 import com.app.estore.request.RegistrationDto;
 import com.app.estore.response.CustomerProductDto;
 import com.app.estore.response.Status;
@@ -39,6 +34,7 @@ public class CustomerServiceImpl implements CustomerService {
     private final CustomerModelMapper customerModelMapper;
     private final CurrentUser currentUser;
     private final WishlistRepository wishlistRepository;
+    private final CustomerCartRepository customerCartRepository;
 
     @Override
     @Transactional
@@ -53,6 +49,10 @@ public class CustomerServiceImpl implements CustomerService {
         Wishlist wishlist = new Wishlist();
         wishlist.setCustomerId(customer.getCustomerId());
         wishlistRepository.save(wishlist);
+
+        CustomerCart customerCart = new CustomerCart();
+        customerCart.setCustomerId(customer.getCustomerId());
+        customerCartRepository.save(customerCart);
 
         return new Status(SUCCESS);
     }
@@ -158,6 +158,24 @@ public class CustomerServiceImpl implements CustomerService {
     public Status removeProductFromWishlist(Integer productId) {
         Wishlist wishlist = wishlistRepository.findById(getCustomerId()).get();
         wishlist.getProductIdSet().remove(productId);
+        return new Status(SUCCESS);
+    }
+
+    @Override
+    @Transactional
+    public Status updateProductToCart(CartRequestDto cartRequestDto) {
+
+        Integer productId = cartRequestDto.getProductId();
+        Integer productQuantity = cartRequestDto.getProductQuantity();
+        CustomerCart customerCart = customerCartRepository.findById(getCustomerId()).get();
+
+        if(productQuantity == 0) {
+            customerCart.getProductToQuantityMap().remove(productId);
+        }
+        else {
+            customerCart.getProductToQuantityMap().put(productId, productQuantity);
+        }
+
         return new Status(SUCCESS);
     }
 

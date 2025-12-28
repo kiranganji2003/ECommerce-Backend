@@ -1,5 +1,6 @@
 package com.app.estore.service;
 
+import com.app.estore.request.CartRequestDto;
 import com.app.estore.response.CustomerProductDto;
 import com.app.estore.response.CustomerProfileDto;
 import com.app.estore.response.CustomerProductResponse;
@@ -17,4 +18,5 @@ public interface CustomerService {
     Status addProductInWishlist(Integer productId);
     CustomerProductResponse getWishlistProducts();
     Status removeProductFromWishlist(Integer productId);
+    Status updateProductToCart(CartRequestDto cartRequestDto);
 }
