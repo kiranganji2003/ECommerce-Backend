@@ -153,6 +153,14 @@ public class CustomerServiceImpl implements CustomerService {
         return new CustomerProductResponse(customerProductDtoList);
     }
 
+    @Override
+    @Transactional
+    public Status removeProductFromWishlist(Integer productId) {
+        Wishlist wishlist = wishlistRepository.findById(getCustomerId()).get();
+        wishlist.getProductIdSet().remove(productId);
+        return new Status(SUCCESS);
+    }
+
     private Integer getCustomerId() {
         return customerRepository.findByEmail(currentUser.getCurrentUsername()).get().getCustomerId();
     }
