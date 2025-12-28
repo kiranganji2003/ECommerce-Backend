@@ -62,4 +62,9 @@ public class CustomerController {
     public ResponseEntity<CustomerProductDto> getProductById(@PathVariable Integer productId) {
         return ResponseEntity.ok(customerService.getProductById(productId));
     }
+
+    @PostMapping("/wishlist/{productId}")
+    public ResponseEntity<Status> addProductInWishlist(@PathVariable Integer productId) {
+        return ResponseEntity.ok(customerService.addProductInWishlist(productId));
+    }
 }
