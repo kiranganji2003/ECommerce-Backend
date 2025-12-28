@@ -9,8 +9,10 @@ import com.app.estore.repository.VendorRepository;
 import com.app.estore.request.ProductRequestDto;
 import com.app.estore.request.RegistrationDto;
 import com.app.estore.response.Status;
+import com.app.estore.response.VendorProfileDto;
 import com.app.estore.service.VendorService;
 import com.app.estore.utility.CurrentUser;
+import com.app.estore.utility.VendorModelMapper;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,6 +28,7 @@ public class VendorServiceImpl implements VendorService {
     private final ProductRepository productRepository;
     private final AllProductsRepository allProductsRepository;
     private final CurrentUser currentUser;
+    private final VendorModelMapper vendorModelMapper;
 
     @Override
     public Status registerVendor(RegistrationDto registrationDto) {
@@ -63,5 +66,16 @@ public class VendorServiceImpl implements VendorService {
         allProductsRepository.save(allProductsObject);
 
         return new Status(PRODUCT_ADDED_SUCCESSFULLY);
+    }
+
+    @Override
+    public VendorProfileDto getVendorProfile() {
+        Vendor vendor = vendorRepository.findByEmail(currentUser.getCurrentUsername()).get();
+        return vendorModelMapper.convertToVendorProfileDto(vendor);
+    }
+
+    @Override
+    public Status deleteProductById(Integer productId) {
+        return null;
     }
 }
