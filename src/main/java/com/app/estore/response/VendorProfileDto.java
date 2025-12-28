@@ -1,6 +1,5 @@
 package com.app.estore.response;
 
-import com.app.estore.entity.Product;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -12,5 +11,5 @@ public class VendorProfileDto {
     private String name;
     private String phone;
     private LocalDateTime createdAt;
-    private List<Product> productList;
+    private List<VendorProductDto> productList;
 }

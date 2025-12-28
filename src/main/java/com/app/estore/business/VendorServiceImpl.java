@@ -75,7 +75,15 @@ public class VendorServiceImpl implements VendorService {
     }
 
     @Override
+    @Transactional
     public Status deleteProductById(Integer productId) {
-        return null;
+
+        Vendor vendor = vendorRepository.findByEmail(currentUser.getCurrentUsername()).get();
+        Product product = productRepository.findById(productId).get();
+        vendor.getProductList().remove(product);
+        product.setVendor(null);
+        allProductsRepository.deleteById(productId);
+
+        return new Status(PRODUCT_DELETED_SUCCESSFULLY);
     }
 }
