@@ -67,4 +67,9 @@ public class CustomerController {
     public ResponseEntity<Status> addProductInWishlist(@PathVariable Integer productId) {
         return ResponseEntity.ok(customerService.addProductInWishlist(productId));
     }
+
+    @GetMapping("/wishlist")
+    public ResponseEntity<CustomerProductResponse> getWishlistProducts() {
+        return ResponseEntity.ok(customerService.getWishlistProducts());
+    }
 }
