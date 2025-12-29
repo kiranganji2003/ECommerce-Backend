@@ -185,7 +185,14 @@ public class CustomerServiceImpl implements CustomerService {
 
         for(Integer productId : productToQuantityMap.keySet()) {
 
-            Product product = productRepository.findById(productId).get();
+            Optional<Product> productOptional = productRepository.findById(productId);
+
+            if(productOptional.isEmpty()) {
+                continue;
+            }
+            
+            Product product = productOptional.get();
+
             CartResponseDto.CartProduct cartProduct = new CartResponseDto.CartProduct();
 
             cartProduct.setProductId(productId);
