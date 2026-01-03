@@ -145,7 +145,7 @@ public class CustomerServiceImpl implements CustomerService {
         Customer customer = customerRepository.findByEmail(currentUser.getCurrentUsername()).get();
         Cart cart = customer.getCart();
         Optional<CartItem> cartItemOptional = cartItemRepository
-                .findByCartIdAndProductId(cart.getCartId(), productId);
+                .findByCart_CartIdAndProduct_ProductId(cart.getCartId(), productId);
 
         if(cartItemOptional.isEmpty()) {
 

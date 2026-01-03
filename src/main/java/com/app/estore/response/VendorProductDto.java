@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Data
 public class VendorProductDto {
-    private Integer productId;
+    private Long productId;
     private String title;
     private String description;
     private String weight;
