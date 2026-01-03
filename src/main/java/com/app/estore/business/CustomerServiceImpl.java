@@ -30,6 +30,7 @@ public class CustomerServiceImpl implements CustomerService {
     private final CustomerModelMapper customerModelMapper;
     private final CurrentUser currentUser;
     private final CartItemRepository cartItemRepository;
+    private final OrderRepository orderRepository;
 
     @Override
     @Transactional
@@ -205,4 +206,35 @@ public class CustomerServiceImpl implements CustomerService {
 
         return cartResponseDto;
     }
+
+    @Override
+    @Transactional
+    public Status checkoutOrder() {
+
+        Customer customer = customerRepository.findByEmail(currentUser.getCurrentUsername()).get();
+        Cart cart = customer.getCart();
+
+        if (cart.getCartItems().isEmpty()) {
+            throw new RuntimeException("Cart is empty");
+        }
+
+        Order order = new Order();
+        order.setCustomer(customer);
+
+        for (CartItem cartItem : cart.getCartItems()) {
+            OrderItem orderItem = new OrderItem();
+            orderItem.setOrder(order);
+            orderItem.setProduct(cartItem.getProduct());
+            orderItem.setProductQuantity(cartItem.getProductQuantity());
+            orderItem.setPriceAtPurchase(cartItem.getProduct().getCost());
+
+            order.getItems().add(orderItem);
+        }
+
+        orderRepository.save(order);
+        cart.getCartItems().clear();
+
+        return new Status(SUCCESS);
+    }
+
 }

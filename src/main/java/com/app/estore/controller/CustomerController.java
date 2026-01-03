@@ -88,4 +88,9 @@ public class CustomerController {
     public ResponseEntity<CartResponseDto> viewCart() {
         return ResponseEntity.ok(customerService.viewCart());
     }
+
+    @PostMapping("/checkout")
+    public ResponseEntity<Status> checkoutOrder() {
+        return ResponseEntity.ok(customerService.checkoutOrder());
+    }
 }

@@ -17,4 +17,5 @@ public interface CustomerService {
     Status removeProductFromWishlist(Long productId);
     Status updateCartItem(CartRequestDto cartRequestDto);
     CartResponseDto viewCart();
+    Status checkoutOrder();
 }
