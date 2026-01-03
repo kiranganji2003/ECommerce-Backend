@@ -9,5 +9,5 @@ public interface VendorService {
     Status registerVendor(RegistrationDto registrationDto);
     Status addProduct(ProductRequestDto productRequestDto);
     VendorProfileDto getVendorProfile();
-    Status deleteProductById(Integer productId);
+    Status deleteProductById(Long productId);
 }

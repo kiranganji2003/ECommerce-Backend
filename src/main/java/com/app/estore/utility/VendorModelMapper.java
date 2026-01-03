@@ -20,7 +20,7 @@ public class VendorModelMapper {
 
         List<VendorProductDto> productList = new ArrayList<>();
 
-        for(Product product : vendor.getProductList()) {
+        for(Product product : vendor.getProducts()) {
             productList.add(convertToVendorProductDto(product));
         }
 

@@ -1,14 +1,12 @@
 package com.app.estore.response;
 
 import com.app.estore.utility.ProductCategory;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import lombok.Data;
 
 @Data
 public class CustomerProductDto {
-    private Integer productId;
-    private Integer vendorId;
+    private Long productId;
+    private Long vendorId;
     private String title;
     private String description;
     private String weight;
