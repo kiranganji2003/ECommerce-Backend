@@ -1,9 +1,7 @@
 package com.app.estore.business;
 
-import com.app.estore.entity.AllProducts;
 import com.app.estore.entity.Product;
 import com.app.estore.entity.Vendor;
-import com.app.estore.repository.AllProductsRepository;
 import com.app.estore.repository.ProductRepository;
 import com.app.estore.repository.VendorRepository;
 import com.app.estore.request.ProductRequestDto;
@@ -26,7 +24,6 @@ public class VendorServiceImpl implements VendorService {
     private final VendorRepository vendorRepository;
     private final PasswordEncoder bCryptPasswordEncoder;
     private final ProductRepository productRepository;
-    private final AllProductsRepository allProductsRepository;
     private final CurrentUser currentUser;
     private final VendorModelMapper vendorModelMapper;
 
@@ -54,16 +51,8 @@ public class VendorServiceImpl implements VendorService {
 
         Vendor vendor = vendorRepository.findByEmail(currentUser.getCurrentUsername()).get();
         product.setVendor(vendor);
-        vendor.getProductList().add(product);
-        product = productRepository.save(product);
-
-        AllProducts allProductsObject = new AllProducts();
-        allProductsObject.setProductId(product.getProductId());
-        allProductsObject.setVendorId(vendor.getVendorId());
-        allProductsObject.setCost(product.getCost());
-        allProductsObject.setProductCategory(product.getProductCategory());
-
-        allProductsRepository.save(allProductsObject);
+        vendor.getProducts().add(product);
+        productRepository.save(product);
 
         return new Status(SUCCESS);
     }
@@ -76,14 +65,21 @@ public class VendorServiceImpl implements VendorService {
 
     @Override
     @Transactional
-    public Status deleteProductById(Integer productId) {
+    public Status deleteProductById(Long productId) {
 
         Vendor vendor = vendorRepository.findByEmail(currentUser.getCurrentUsername()).get();
-        Product product = productRepository.findById(productId).get();
-        vendor.getProductList().remove(product);
-        product.setVendor(null);
-        allProductsRepository.deleteById(productId);
+
+        Product product = productRepository
+                .findById(productId)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+
+        if (!product.getVendor().getVendorId().equals(vendor.getVendorId())) {
+            throw new RuntimeException("You are not allowed to delete this product");
+        }
+
+        productRepository.delete(product);
 
         return new Status(SUCCESS);
     }
+
 }

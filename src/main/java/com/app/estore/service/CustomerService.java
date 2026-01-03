@@ -11,10 +11,10 @@ public interface CustomerService {
     CustomerProductResponse findProductsByCostRange(Integer min, Integer max);
     CustomerProductResponse getProductsByCategory(ProductCategory category);
     CustomerProfileDto getCustomerProfile();
-    CustomerProductDto getProductById(Integer productId);
-    Status addProductInWishlist(Integer productId);
+    CustomerProductDto getProductById(Long productId);
+    Status addProductInWishlist(Long productId);
     CustomerProductResponse getWishlistProducts();
-    Status removeProductFromWishlist(Integer productId);
-    Status updateProductToCart(CartRequestDto cartRequestDto);
+    Status removeProductFromWishlist(Long productId);
+    Status updateCartItem(CartRequestDto cartRequestDto);
     CartResponseDto viewCart();
 }

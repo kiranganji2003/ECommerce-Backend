@@ -1,8 +1,6 @@
 package com.app.estore.response;
 
 import com.app.estore.utility.ProductCategory;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import lombok.Data;
 
 @Data

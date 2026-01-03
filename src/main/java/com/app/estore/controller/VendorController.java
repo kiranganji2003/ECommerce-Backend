@@ -51,7 +51,7 @@ public class VendorController {
     }
 
     @DeleteMapping("/product/{productId}")
-    public ResponseEntity<Status> deleteProductById(@PathVariable Integer productId) {
+    public ResponseEntity<Status> deleteProductById(@PathVariable Long productId) {
         return ResponseEntity.ok(vendorService.deleteProductById(productId));
     }
 }

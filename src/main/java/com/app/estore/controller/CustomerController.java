@@ -60,12 +60,12 @@ public class CustomerController {
     }
 
     @GetMapping("/products/{productId}")
-    public ResponseEntity<CustomerProductDto> getProductById(@PathVariable Integer productId) {
+    public ResponseEntity<CustomerProductDto> getProductById(@PathVariable Long productId) {
         return ResponseEntity.ok(customerService.getProductById(productId));
     }
 
     @PostMapping("/wishlist/{productId}")
-    public ResponseEntity<Status> addProductInWishlist(@PathVariable Integer productId) {
+    public ResponseEntity<Status> addProductInWishlist(@PathVariable Long productId) {
         return ResponseEntity.ok(customerService.addProductInWishlist(productId));
     }
 
@@ -75,13 +75,13 @@ public class CustomerController {
     }
 
     @DeleteMapping("/wishlist/{productId}")
-    public ResponseEntity<Status> removeProductFromWishlist(@PathVariable Integer productId) {
+    public ResponseEntity<Status> removeProductFromWishlist(@PathVariable Long productId) {
         return ResponseEntity.ok(customerService.removeProductFromWishlist(productId));
     }
 
     @PostMapping("/cart")
     public ResponseEntity<Status> updateProductToCart(@RequestBody CartRequestDto cartRequestDto) {
-        return ResponseEntity.ok(customerService.updateProductToCart(cartRequestDto));
+        return ResponseEntity.ok(customerService.updateCartItem(cartRequestDto));
     }
 
     @GetMapping("/cart")

@@ -13,8 +13,8 @@ public class CartResponseDto {
 
     @Data
     public static class CartProduct {
-        private Integer productId;
-        private Integer vendorId;
+        private Long productId;
+        private Long vendorId;
         private String title;
         private String description;
         private String weight;

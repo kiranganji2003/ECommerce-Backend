@@ -5,15 +5,17 @@ import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "vendors")
 @Data
 public class Vendor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer vendorId;
+    private Long vendorId;
 
     @Column(unique = true)
     private String email;
@@ -28,5 +30,5 @@ public class Vendor {
     @OneToMany(mappedBy = "vendor",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
-    private List<Product> productList;
+    private List<Product> products = new ArrayList<>();
 }

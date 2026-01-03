@@ -1,7 +1,6 @@
 package com.app.estore.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,7 +17,7 @@ public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer customerId;
+    private Long customerId;
 
     @Column(unique = true)
     private String email;
@@ -38,11 +37,17 @@ public class Customer {
     )
     private Wishlist wishlist;
 
-    // helper method
-    public void createWishlist() {
+    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Cart cart;
+
+    public void createWishlistAndCart() {
         Wishlist wishlist = new Wishlist();
         wishlist.setCustomer(this);
         this.wishlist = wishlist;
+
+        Cart cart = new Cart();
+        cart.setCustomer(this);
+        this.cart = cart;
     }
 }
 
