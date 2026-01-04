@@ -40,7 +40,6 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setPassword(bCryptPasswordEncoder.encode(registrationDto.getPassword()));
         customer.setName(registrationDto.getName());
         customer.setPhone(registrationDto.getPhone());
-        customer.createWishlistAndCart();
         customerRepository.save(customer);
         return new Status(SUCCESS);
     }

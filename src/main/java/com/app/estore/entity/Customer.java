@@ -54,5 +54,15 @@ public class Customer {
         cart.setCustomer(this);
         this.cart = cart;
     }
+
+    public Customer() {
+        Wishlist wishlist = new Wishlist();
+        wishlist.setCustomer(this);
+        this.wishlist = wishlist;
+
+        Cart cart = new Cart();
+        cart.setCustomer(this);
+        this.cart = cart;
+    }
 }
 
