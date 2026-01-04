@@ -220,6 +220,7 @@ public class CustomerServiceImpl implements CustomerService {
 
         Order order = new Order();
         order.setCustomer(customer);
+        Integer totalCost = 0;
 
         for (CartItem cartItem : cart.getCartItems()) {
             OrderItem orderItem = new OrderItem();
@@ -227,14 +228,20 @@ public class CustomerServiceImpl implements CustomerService {
             orderItem.setProduct(cartItem.getProduct());
             orderItem.setProductQuantity(cartItem.getProductQuantity());
             orderItem.setPriceAtPurchase(cartItem.getProduct().getCost());
-
+            totalCost += orderItem.getPriceAtPurchase() * orderItem.getProductQuantity();
             order.getItems().add(orderItem);
         }
 
+        order.setTotalCost(totalCost);
         orderRepository.save(order);
         cart.getCartItems().clear();
 
         return new Status(SUCCESS);
+    }
+
+    @Override
+    public OrdersDto showAllOrders() {
+        return null;
     }
 
 }

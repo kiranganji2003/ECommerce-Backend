@@ -93,4 +93,9 @@ public class CustomerController {
     public ResponseEntity<Status> checkoutOrder() {
         return ResponseEntity.ok(customerService.checkoutOrder());
     }
+
+    @GetMapping("/orders")
+    public ResponseEntity<OrdersDto> showAllOrders() {
+        return ResponseEntity.ok(customerService.showAllOrders());
+    }
 }
