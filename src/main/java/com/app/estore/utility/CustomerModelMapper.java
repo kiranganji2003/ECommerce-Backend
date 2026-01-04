@@ -52,6 +52,7 @@ public class CustomerModelMapper {
                 orderItemDto.setProductCategory(product.getProductCategory());
                 orderItemDto.setProductQuantity(orderItem.getProductQuantity());
                 orderItemDto.setItemTotalCost(orderItem.getItemTotalCost());
+                orderItemDto.setPriceAtPurchase(orderItem.getPriceAtPurchase());
 
                 orderItemDtoList.add(orderItemDto);
             }
