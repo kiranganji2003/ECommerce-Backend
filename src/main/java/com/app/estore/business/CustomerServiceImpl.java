@@ -85,7 +85,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerProfileDto getCustomerProfile() {
-        Customer customer = customerRepository.findByEmail(currentUser.getCurrentUsername()).get();
+        Customer customer = getCustomer();
         return customerModelMapper.convertToCustomerDto(customer);
     }
 
@@ -104,14 +104,14 @@ public class CustomerServiceImpl implements CustomerService {
             return new Status(FAILURE);
         }
 
-        Customer customer = customerRepository.findByEmail(currentUser.getCurrentUsername()).get();
+        Customer customer = getCustomer();
         customer.getWishlist().getProducts().add(product.get());
         return new Status(SUCCESS);
     }
 
     @Override
     public CustomerProductResponse getWishlistProducts() {
-        Customer customer = customerRepository.findByEmail(currentUser.getCurrentUsername()).get();
+        Customer customer = getCustomer();
         List<CustomerProductDto> customerProductDtoList = new ArrayList<>();
 
         for(Product product : customer.getWishlist().getProducts()) {
@@ -130,7 +130,7 @@ public class CustomerServiceImpl implements CustomerService {
             return new Status(FAILURE);
         }
 
-        Customer customer = customerRepository.findByEmail(currentUser.getCurrentUsername()).get();
+        Customer customer = getCustomer();
         customer.getWishlist().getProducts().remove(product.get());
 
         return new Status(SUCCESS);
@@ -143,7 +143,7 @@ public class CustomerServiceImpl implements CustomerService {
         Long productId = cartRequestDto.getProductId();
         Integer productQuantity = cartRequestDto.getProductQuantity();
 
-        Customer customer = customerRepository.findByEmail(currentUser.getCurrentUsername()).get();
+        Customer customer = getCustomer();
         Cart cart = customer.getCart();
         Optional<CartItem> cartItemOptional = cartItemRepository
                 .findByCart_CartIdAndProduct_ProductId(cart.getCartId(), productId);
@@ -173,7 +173,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CartResponseDto viewCart() {
-        Customer customer = customerRepository.findByEmail(currentUser.getCurrentUsername()).get();
+        Customer customer = getCustomer();
         Cart cart = customer.getCart();
 
         List<CartResponseDto.CartProduct> cartProductList = new ArrayList<>();
@@ -211,7 +211,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Transactional
     public Status checkoutOrder() {
 
-        Customer customer = customerRepository.findByEmail(currentUser.getCurrentUsername()).get();
+        Customer customer = getCustomer();
         Cart cart = customer.getCart();
 
         if (cart.getCartItems().isEmpty()) {
@@ -228,7 +228,8 @@ public class CustomerServiceImpl implements CustomerService {
             orderItem.setProduct(cartItem.getProduct());
             orderItem.setProductQuantity(cartItem.getProductQuantity());
             orderItem.setPriceAtPurchase(cartItem.getProduct().getCost());
-            totalCost += orderItem.getPriceAtPurchase() * orderItem.getProductQuantity();
+            orderItem.setItemTotalCost(orderItem.getPriceAtPurchase() * orderItem.getProductQuantity());
+            totalCost += orderItem.getItemTotalCost();
             order.getItems().add(orderItem);
         }
 
@@ -240,8 +241,15 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public OrdersDto showAllOrders() {
-        return null;
+    public OrderResponseDto showAllOrders() {
+        Customer customer = getCustomer();
+        List<Order> orderList = customer.getOrderList();
+
+        return customerModelMapper.orderResponseDto(orderList);
+    }
+
+    private Customer getCustomer() {
+        return customerRepository.findByEmail(currentUser.getCurrentUsername()).get();
     }
 
 }

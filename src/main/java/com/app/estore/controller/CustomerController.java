@@ -95,7 +95,7 @@ public class CustomerController {
     }
 
     @GetMapping("/orders")
-    public ResponseEntity<OrdersDto> showAllOrders() {
+    public ResponseEntity<OrderResponseDto> showAllOrders() {
         return ResponseEntity.ok(customerService.showAllOrders());
     }
 }

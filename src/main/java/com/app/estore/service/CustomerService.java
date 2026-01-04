@@ -19,5 +19,5 @@ public interface CustomerService {
     Status updateCartItem(CartRequestDto cartRequestDto);
     CartResponseDto viewCart();
     Status checkoutOrder();
-    OrdersDto showAllOrders();
+    OrderResponseDto showAllOrders();
 }

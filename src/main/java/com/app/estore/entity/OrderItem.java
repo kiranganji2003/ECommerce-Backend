@@ -24,4 +24,5 @@ public class OrderItem {
 
     private Integer productQuantity;
     private Integer priceAtPurchase;
+    private Integer itemTotalCost;
 }
