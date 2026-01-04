@@ -4,6 +4,7 @@ import com.app.estore.request.CartRequestDto;
 import com.app.estore.response.*;
 import com.app.estore.utility.ProductCategory;
 import com.app.estore.request.RegistrationDto;
+import org.jspecify.annotations.Nullable;
 
 public interface CustomerService {
     Status registerCustomer(RegistrationDto customerRegistrationDto);
@@ -18,4 +19,5 @@ public interface CustomerService {
     Status updateCartItem(CartRequestDto cartRequestDto);
     CartResponseDto viewCart();
     Status checkoutOrder();
+    OrderResponseDto showAllOrders();
 }
