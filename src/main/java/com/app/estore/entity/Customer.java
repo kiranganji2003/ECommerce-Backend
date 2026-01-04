@@ -14,7 +14,6 @@ import java.util.List;
 @Table(name = "customers")
 @Getter
 @Setter
-@NoArgsConstructor
 public class Customer {
 
     @Id
