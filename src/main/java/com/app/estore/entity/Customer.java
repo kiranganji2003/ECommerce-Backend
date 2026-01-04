@@ -2,7 +2,6 @@ package com.app.estore.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -14,7 +13,6 @@ import java.util.List;
 @Table(name = "customers")
 @Getter
 @Setter
-@NoArgsConstructor
 public class Customer {
 
     @Id
@@ -45,7 +43,7 @@ public class Customer {
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<Order> orderList = new ArrayList<>();
 
-    public void createWishlistAndCart() {
+    public Customer() {
         Wishlist wishlist = new Wishlist();
         wishlist.setCustomer(this);
         this.wishlist = wishlist;
