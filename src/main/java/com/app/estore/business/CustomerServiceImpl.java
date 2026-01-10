@@ -94,18 +94,22 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerProductDto getProductById(Long productId) {
-        Product product = productRepository.getReferenceById(productId);
-        return productModelMapper.convert(product);
+        Optional<Product> product = productRepository.findById(productId);
+        checkProductExist(product);
+        return productModelMapper.convert(product.get());
+    }
+
+    private void checkProductExist(Optional<Product> product) {
+        if(product.isEmpty()) {
+            throw new RuntimeException("Product not found ");
+        }
     }
 
     @Override
     @Transactional
     public Status addProductInWishlist(Long productId) {
         Optional<Product> product = productRepository.findById(productId);
-
-        if(product.isEmpty()) {
-            return new Status(FAILURE);
-        }
+        checkProductExist(product);
 
         Customer customer = getCustomer();
         customer.getWishlist().getProducts().add(product.get());
@@ -128,10 +132,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Transactional
     public Status removeProductFromWishlist(Long productId) {
         Optional<Product> product = productRepository.findById(productId);
-
-        if(product.isEmpty()) {
-            return new Status(FAILURE);
-        }
+        checkProductExist(product);
 
         Customer customer = getCustomer();
         customer.getWishlist().getProducts().remove(product.get());
@@ -146,19 +147,22 @@ public class CustomerServiceImpl implements CustomerService {
         Long productId = cartRequestDto.getProductId();
         Integer productQuantity = cartRequestDto.getProductQuantity();
 
+        if(productQuantity < 0) {
+            throw new RuntimeException("Negative product quantity");
+        }
+
+        Optional<Product> product = productRepository.findById(productId);
+        checkProductExist(product);
+
         Customer customer = getCustomer();
         Cart cart = customer.getCart();
         Optional<CartItem> cartItemOptional = cartItemRepository
                 .findByCart_CartIdAndProduct_ProductId(cart.getCartId(), productId);
 
         if(cartItemOptional.isEmpty()) {
-
-            Product product = productRepository.findById(productId)
-                    .orElseThrow(() -> new RuntimeException("Product not found"));
-
             CartItem cartItem = new CartItem();
             cartItem.setCart(cart);
-            cartItem.setProduct(product);
+            cartItem.setProduct(product.get());
             cartItem.setProductQuantity(productQuantity);
             cartItemRepository.save(cartItem);
             cart.getCartItems().add(cartItem);
