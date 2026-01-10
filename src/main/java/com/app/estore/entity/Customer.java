@@ -44,13 +44,11 @@ public class Customer {
     private List<Order> orderList = new ArrayList<>();
 
 
-    public void createEmptyWishlist() {
+    public void Customer() {
         Wishlist wishlist = new Wishlist();
         wishlist.setCustomer(this);
         this.wishlist = wishlist;
-    }
 
-    public void createEmptyCart() {
         Cart cart = new Cart();
         cart.setCustomer(this);
         this.cart = cart;

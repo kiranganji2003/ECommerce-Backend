@@ -40,8 +40,6 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setPassword(bCryptPasswordEncoder.encode(registrationDto.getPassword()));
         customer.setName(registrationDto.getName());
         customer.setPhone(registrationDto.getPhone());
-        customer.createEmptyWishlist();
-        customer.createEmptyCart();
         customerRepository.save(customer);
         return new Status(SUCCESS);
     }
@@ -257,7 +255,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Transactional
     public Status clearCart() {
         Customer customer = getCustomer();
-        customer.createEmptyCart();
+        customer.getCart().getCartItems().clear();
         return new Status(SUCCESS);
     }
 
@@ -265,7 +263,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Transactional
     public Status clearWishlist() {
         Customer customer = getCustomer();
-        customer.createEmptyWishlist();
+        customer.getWishlist().getProducts().clear();
         return new Status(SUCCESS);
     }
 
