@@ -1,7 +1,6 @@
 package com.app.estore.business;
 
 import com.app.estore.entity.*;
-import com.app.estore.exception.InvalidRangeException;
 import com.app.estore.repository.*;
 import com.app.estore.request.CartRequestDto;
 import com.app.estore.response.*;
@@ -64,7 +63,7 @@ public class CustomerServiceImpl implements CustomerService {
     public CustomerProductResponse findProductsByCostRange(Integer min, Integer max) {
 
         if(min > max) {
-            throw new InvalidRangeException("Invalid range exception " + min + " to " + max);
+            throw new RuntimeException("Invalid range exception " + min + " to " + max);
         }
 
         List<Product> allProductsList = productRepository.findProductsByCostRange(min, max);

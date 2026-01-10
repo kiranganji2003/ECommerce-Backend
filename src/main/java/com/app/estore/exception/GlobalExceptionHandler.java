@@ -25,9 +25,4 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(new ErrorMessage(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ExceptionHandler(InvalidRangeException.class)
-    public ResponseEntity<ErrorMessage> handleInvalidRangeException(InvalidRangeException ex) {
-        return new ResponseEntity<>(new ErrorMessage(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
 }
