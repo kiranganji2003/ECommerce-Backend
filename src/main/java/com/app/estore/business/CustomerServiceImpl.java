@@ -40,6 +40,8 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setPassword(bCryptPasswordEncoder.encode(registrationDto.getPassword()));
         customer.setName(registrationDto.getName());
         customer.setPhone(registrationDto.getPhone());
+        customer.createEmptyWishlist();
+        customer.createEmptyCart();
         customerRepository.save(customer);
         return new Status(SUCCESS);
     }
@@ -59,6 +61,10 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerProductResponse findProductsByCostRange(Integer min, Integer max) {
+
+        if(min > max) {
+            throw new RuntimeException("Invalid range exception " + min + " to " + max);
+        }
 
         List<Product> allProductsList = productRepository.findProductsByCostRange(min, max);
         List<CustomerProductDto> customerProductDtoList = new ArrayList<>();
@@ -245,6 +251,22 @@ public class CustomerServiceImpl implements CustomerService {
         List<Order> orderList = customer.getOrderList();
 
         return customerModelMapper.orderResponseDto(orderList);
+    }
+
+    @Override
+    @Transactional
+    public Status clearCart() {
+        Customer customer = getCustomer();
+        customer.createEmptyCart();
+        return new Status(SUCCESS);
+    }
+
+    @Override
+    @Transactional
+    public Status clearWishlist() {
+        Customer customer = getCustomer();
+        customer.createEmptyWishlist();
+        return new Status(SUCCESS);
     }
 
     private Customer getCustomer() {

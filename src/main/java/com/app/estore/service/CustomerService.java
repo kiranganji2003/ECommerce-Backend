@@ -20,4 +20,6 @@ public interface CustomerService {
     CartResponseDto viewCart();
     Status checkoutOrder();
     OrderResponseDto showAllOrders();
+    Status clearCart();
+    Status clearWishlist();
 }

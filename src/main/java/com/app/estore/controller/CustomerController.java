@@ -98,4 +98,14 @@ public class CustomerController {
     public ResponseEntity<OrderResponseDto> showAllOrders() {
         return ResponseEntity.ok(customerService.showAllOrders());
     }
+
+    @PostMapping("/cart/clear")
+    public ResponseEntity<Status> clearCart() {
+        return ResponseEntity.ok(customerService.clearCart());
+    }
+
+    @PostMapping("/wishlist/clear")
+    public ResponseEntity<Status> clearWishlist() {
+        return ResponseEntity.ok(customerService.clearWishlist());
+    }
 }

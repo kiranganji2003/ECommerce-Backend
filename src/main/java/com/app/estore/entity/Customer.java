@@ -43,11 +43,14 @@ public class Customer {
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<Order> orderList = new ArrayList<>();
 
-    public Customer() {
+
+    public void createEmptyWishlist() {
         Wishlist wishlist = new Wishlist();
         wishlist.setCustomer(this);
         this.wishlist = wishlist;
+    }
 
+    public void createEmptyCart() {
         Cart cart = new Cart();
         cart.setCustomer(this);
         this.cart = cart;
