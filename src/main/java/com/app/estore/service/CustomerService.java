@@ -22,4 +22,5 @@ public interface CustomerService {
     OrderResponseDto showAllOrders();
     Status clearCart();
     Status clearWishlist();
+    CustomerProductResponse getProductsByPages(Integer page, Integer size);
 }

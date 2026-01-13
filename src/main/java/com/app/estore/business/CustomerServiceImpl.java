@@ -12,6 +12,9 @@ import com.app.estore.request.RegistrationDto;
 import com.app.estore.service.CustomerService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -269,6 +272,19 @@ public class CustomerServiceImpl implements CustomerService {
         Customer customer = getCustomer();
         customer.getWishlist().getProducts().clear();
         return new Status(SUCCESS);
+    }
+
+    @Override
+    public CustomerProductResponse getProductsByPages(Integer page, Integer size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Product> productPage = productRepository.findAll(pageable);
+        List<CustomerProductDto> customerProductDtoList = new ArrayList<>();
+
+        for(Product product : productPage) {
+            customerProductDtoList.add(productModelMapper.convert(product));
+        }
+
+        return new CustomerProductResponse(customerProductDtoList);
     }
 
     private Customer getCustomer() {
