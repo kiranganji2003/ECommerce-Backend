@@ -108,4 +108,9 @@ public class CustomerController {
     public ResponseEntity<Status> clearWishlist() {
         return ResponseEntity.ok(customerService.clearWishlist());
     }
+
+    @GetMapping("/products/pageable")
+    public ResponseEntity<CustomerProductResponse> getProductsByPages(@RequestParam Integer page, @RequestParam Integer size) {
+        return ResponseEntity.ok(customerService.getProductsByPages(page, size));
+    }
 }
