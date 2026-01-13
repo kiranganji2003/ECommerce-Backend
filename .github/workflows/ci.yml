@@ -9,6 +9,7 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    environment: APP_VALUES
 
     env:
       SERVER_PORT: ${{ secrets.SERVER_PORT }}
